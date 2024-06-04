@@ -41,7 +41,7 @@ func (s *Service) Register(register entity.Register) (entity.Code, error) {
 		return entity.Code{}, err
 	}
 
-	if client.RedirectURI != register.RedirectURI {
+	if client.RedirectURI != register.RedirectUri {
 		return entity.Code{}, errors.New("invalId redirect URI")
 	}
 
@@ -73,7 +73,7 @@ func (s *Service) Login(login entity.Login) (entity.Code, error) {
 		return entity.Code{}, err
 	}
 
-	if client.RedirectURI != login.RedirectURI {
+	if client.RedirectURI != login.RedirectUri {
 		return entity.Code{}, errors.New("invalId redirect URI")
 	}
 

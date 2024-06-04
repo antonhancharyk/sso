@@ -41,14 +41,14 @@ type Register struct {
 	Email       string `form:"email" binding:"required,email"`
 	Password    string `form:"password" binding:"required"`
 	App         string `form:"app" binding:"required"`
-	RedirectURI string `form:"redirect_uri" binding:"required"`
+	RedirectUri string `form:"redirect_uri" binding:"required"`
 }
 
 type Login struct {
 	Email       string `form:"email" binding:"required,email"`
 	Password    string `form:"password" binding:"required"`
 	App         string `form:"app" binding:"required"`
-	RedirectURI string `form:"redirect_uri" binding:"required"`
+	RedirectUri string `form:"redirect_uri" binding:"required"`
 }
 
 type ValidateToken struct {

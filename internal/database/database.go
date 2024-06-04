@@ -5,6 +5,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
@@ -22,6 +25,25 @@ func Connect() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	driver, err := postgres.WithInstance(conn.DB, &postgres.Config{})
+	if err != nil {
+		log.Fatalf("could not create migrate instance: %v", err)
+	}
+
+	m, err := migrate.NewWithDatabaseInstance(
+		"file://migrations",
+		os.Getenv("DB_NAME"), driver)
+	if err != nil {
+		log.Fatalf("could not create migrate instance: %v", err)
+	}
+
+	err = m.Up()
+	if err != nil && err != migrate.ErrNoChange {
+		log.Fatalf("could not run up migrations: %v", err)
+	}
+
+	fmt.Println("migrations applied successfully!")
 
 	db = conn
 }

@@ -20,7 +20,7 @@ CREATE TABLE tokens (
     access_token TEXT NOT NULL,
     refresh_token TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -32,7 +32,7 @@ CREATE TABLE codes (
     client_id INT NOT NULL,
     exp TIMESTAMP NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (client_id) REFERENCES clients(id)
@@ -62,4 +62,4 @@ CREATE TRIGGER codes_update_trigger
 BEFORE UPDATE ON codes
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-INSERT INTO clients (app, client_secret, redirect_uri) VALUES ("crypto-knight", "crypto-knight", "https://crypto-knight.online/");
+INSERT INTO clients (app, redirect_uri) VALUES ('crypto-knight', 'https://crypto-knight.online/');

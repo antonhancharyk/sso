@@ -56,7 +56,7 @@ func (h *Handler) RegisterForm(ctx *gin.Context) {
 		return
 	}
 
-	redirectURL := fmt.Sprintf("%s?code=%s", register.RedirectURI, code.Code)
+	redirectURL := fmt.Sprintf("%s?code=%s", register.RedirectUri, code.Code)
 
 	ctx.Redirect(http.StatusFound, redirectURL)
 }
@@ -76,7 +76,7 @@ func (h *Handler) LoginForm(ctx *gin.Context) {
 		return
 	}
 
-	redirectURL := fmt.Sprintf("%s?code=%s", login.RedirectURI, code.Code)
+	redirectURL := fmt.Sprintf("%s?code=%s", login.RedirectUri, code.Code)
 
 	ctx.Redirect(http.StatusFound, redirectURL)
 }

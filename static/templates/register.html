@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <h1>Register</h1>
+  <form action="/register" method="POST">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="hidden" name="app" value="{{ .App }}">
+    <input type="hidden" name="redirect_uri" value="{{ .RedirectUri }}">    
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="/login?app={{ .App }}&redirect_uri={{ .RedirectUri }}">Login</a></p>
+</body>
+</html>

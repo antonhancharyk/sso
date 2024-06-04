@@ -6,12 +6,12 @@ import (
 )
 
 func MustLoad() (entity.RSAKeys, error) {
-	privateKey, err := utilities.LoadPrivateKey("../../config/rsa/private_key.pem")
+	privateKey, err := utilities.LoadPrivateKey("./config/rsa/private_key.pem")
 	if err != nil {
 		return entity.RSAKeys{}, err
 	}
 
-	publicKey, err := utilities.LoadPublicKey("../../config/rsa/public_key.pem")
+	publicKey, err := utilities.LoadPublicKey("./config/rsa/public_key.pem")
 	if err != nil {
 		return entity.RSAKeys{}, err
 	}

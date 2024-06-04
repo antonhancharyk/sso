@@ -13,7 +13,8 @@ func RunHTTP(hdl *handler.Handler) {
 
 	r.Use(middleware.UseCORS())
 
-	r.LoadHTMLGlob("templates/*")
+	r.Static("/static", "./static")
+	r.LoadHTMLGlob("./static/templates/*")
 
 	r.GET("/register", hdl.ShowRegisterForm)
 	r.POST("/register", hdl.RegisterForm)
