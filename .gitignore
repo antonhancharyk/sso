@@ -18,5 +18,5 @@
 
 # Artefacts
 artefacts/
-rsa/
+private_key.pem
 .env
