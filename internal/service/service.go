@@ -21,6 +21,17 @@ func New(repo *repository.Repository, keys entity.RSAKeys) *Service {
 }
 
 func (s *Service) Register(register entity.Register) (entity.Code, error) {
+	emailAllowed := false
+	emails := []string{"ant.goncharik@gmail.com"}
+	for _, v := range emails {
+		if register.Email == v {
+			emailAllowed = true
+		}
+	}
+	if !emailAllowed {
+		return entity.Code{}, errors.New("email is not allowed")
+	}
+
 	hash, err := bcrypt.GenerateFromPassword([]byte(register.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return entity.Code{}, err

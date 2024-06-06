@@ -61,5 +61,3 @@ FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER codes_update_trigger
 BEFORE UPDATE ON codes
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
-INSERT INTO clients (app, redirect_uri) VALUES ('crypto-knight', 'https://crypto-knight.online/');
