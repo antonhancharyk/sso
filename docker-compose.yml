@@ -58,15 +58,8 @@ services:
       - ./certs:/etc/letsencrypt
       - ./certs:/var/www/certbot
       - ./config/certbot/renew_certificates.sh:/renew_certificates.sh  
-    entrypoint:
-      - /bin/sh
-      - -c
-      - |
-        trap 'exit 0' TERM;
-        while :; do
-          /renew_certificates.sh;
-          sleep 24h & wait $!;
-        done
+    entrypoint: >
+      /bin/sh -c "trap 'exit 0' TERM; while :; do /renew_certificates.sh; sleep 24h & wait $!; done"
     environment:
       - CERTBOT_EMAIL=ant.goncharik.development@gmail.com
       - CERTBOT_DOMAIN=ssoauth.online
