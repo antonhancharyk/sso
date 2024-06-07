@@ -58,7 +58,6 @@ services:
       - ./certs:/etc/letsencrypt
       - ./certs:/var/www/certbot
       - ./config/certbot/start_certbot.sh:/start_certbot.sh 
-      - ./config/certbot/renew_certificates.sh:/renew_certificates.sh 
     entrypoint: /start_certbot.sh
     environment:
       - CERTBOT_EMAIL=ant.goncharik.development@gmail.com
