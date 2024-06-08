@@ -22,7 +22,7 @@ func New(repo *repository.Repository, keys entity.RSAKeys) *Service {
 
 func (s *Service) Register(register entity.Register) (entity.Code, error) {
 	emailAllowed := false
-	emails := []string{"ant.goncharik@gmail.com"}
+	emails := []string{"ant.goncharik@gmail.com", "bnncrmknt@gmail.com"}
 	for _, v := range emails {
 		if register.Email == v {
 			emailAllowed = true
