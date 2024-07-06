@@ -19,7 +19,7 @@ func New(db *sqlx.DB) *Repository {
 func (r *Repository) GetUserByEmail(email string) (entity.User, error) {
 	userData := []entity.User{}
 
-	err := r.db.Select(&userData, "SELECT id FROM users WHERE email = $1", email)
+	err := r.db.Select(&userData, "SELECT id, password_hash FROM users WHERE email = $1", email)
 
 	if len(userData) == 0 {
 		return entity.User{}, errors.New("user not found")
@@ -35,10 +35,10 @@ func (r *Repository) CreateUser(user entity.User) error {
 	return err
 }
 
-func (r *Repository) GetClient(clientId string) (entity.Client, error) {
+func (r *Repository) GetClient(app string) (entity.Client, error) {
 	clienData := []entity.Client{}
 
-	err := r.db.Select(&clienData, "SELECT id, redirect_uri FROM clients WHERE client_id = $1", clientId)
+	err := r.db.Select(&clienData, "SELECT id, redirect_uri FROM clients WHERE app = $1", app)
 
 	if len(clienData) == 0 {
 		return entity.Client{}, errors.New("client not found")
@@ -64,7 +64,7 @@ func (r *Repository) CreateToken(createToken entity.CreateToken) error {
 func (r *Repository) GetCode(exchangeCode entity.ExchangeCode) (entity.Code, error) {
 	codeData := []entity.Code{}
 
-	err := r.db.Select(&codeData, "SELECT id, user_id FROM codes WHERE code = $1", exchangeCode.Code)
+	err := r.db.Select(&codeData, "SELECT id, user_id, exp FROM codes WHERE code = $1", exchangeCode.Code)
 
 	if len(codeData) == 0 {
 		return entity.Code{}, errors.New("code not found")

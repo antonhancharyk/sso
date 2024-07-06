@@ -76,7 +76,7 @@ func (s *Service) Login(login entity.Login) (entity.Code, error) {
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(login.Password))
 	if err != nil {
-		return entity.Code{}, errors.New("invalId password")
+		return entity.Code{}, errors.New("invalid password")
 	}
 
 	client, err := s.repo.GetClient(login.App)
@@ -85,7 +85,7 @@ func (s *Service) Login(login entity.Login) (entity.Code, error) {
 	}
 
 	if client.RedirectURI != login.RedirectUri {
-		return entity.Code{}, errors.New("invalId redirect URI")
+		return entity.Code{}, errors.New("invalid redirect uri")
 	}
 
 	exp := time.Now().Add(5 * time.Minute)

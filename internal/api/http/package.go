@@ -1,14 +1,12 @@
 package http
 
 import (
-	"fmt"
-
 	"github.com/antongoncharik/sso/internal/api/http/handler"
 	"github.com/antongoncharik/sso/internal/api/http/middleware"
 	"github.com/gin-gonic/gin"
 )
 
-func RunHTTP(hdl *handler.Handler) {
+func GetRoutes(hdl *handler.Handler) *gin.Engine {
 	r := gin.Default()
 
 	r.Use(middleware.UseCORS())
@@ -24,7 +22,5 @@ func RunHTTP(hdl *handler.Handler) {
 	r.POST("/refresh", hdl.RefreshToken)
 	r.GET("/validate", hdl.ValidateToken)
 
-	host := fmt.Sprintf(":%d", 8080)
-
-	r.Run(host)
+	return r
 }
