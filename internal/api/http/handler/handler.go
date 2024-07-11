@@ -110,7 +110,7 @@ func (h *Handler) ValidateToken(ctx *gin.Context) {
 
 	err = h.svc.ValidateToken(paramsToken.Token)
 	if err != nil {
-		ctx.JSON(http.StatusForbidden, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -119,6 +119,12 @@ func (h *Handler) ValidateToken(ctx *gin.Context) {
 
 func (h *Handler) RefreshToken(ctx *gin.Context) {
 	var paramsToken entity.ValidateToken
+
+	err := ctx.ShouldBindJSON(&paramsToken)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	token, err := h.svc.RefreshToken(paramsToken)
 	if err != nil {
