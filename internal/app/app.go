@@ -2,8 +2,8 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -15,15 +15,18 @@ import (
 	"github.com/antongoncharik/sso/internal/database"
 	"github.com/antongoncharik/sso/internal/repository"
 	"github.com/antongoncharik/sso/internal/service"
+	"github.com/antongoncharik/sso/pkg/logger"
 )
 
 func Run() {
+	log := logger.New()
+
 	keys, err := config.MustLoad()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	database.Connect()
+	database.Connect(log)
 	defer database.Close()
 
 	db := database.Get()
@@ -42,10 +45,10 @@ func Run() {
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
-			fmt.Printf("could not listen on :8080: %v\n", err)
+			log.Fatal(errors.New(fmt.Sprintf("could not listen on :8080: %v\n", err)))
 		}
 	}()
-	fmt.Println("server started on :8080")
+	log.Info("server started on :8080")
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt)
@@ -55,11 +58,10 @@ func Run() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	fmt.Println("shutting down server...")
+	log.Info("shutting down server...")
 	err = server.Shutdown(ctx)
 	if err != nil {
-		fmt.Printf("server forced to shutdown: %v\n", err)
+		log.Fatal(errors.New(fmt.Sprintf("server forced to shutdown: %v\n", err)))
 	}
-
-	fmt.Println("server exiting")
+	log.Info("server exiting")
 }
