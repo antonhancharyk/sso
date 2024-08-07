@@ -30,7 +30,7 @@ func GenerateToken(userId int64, privateKey *rsa.PrivateKey) (entity.Token, erro
 		return entity.Token{}, errors.New("error generating token")
 	}
 
-	return entity.Token{AccessToken: accessTokenStr, RefreshToken: refreshTokenStr}, nil
+	return entity.Token{UserId: userId, AccessToken: accessTokenStr, RefreshToken: refreshTokenStr}, nil
 }
 
 func ValidateToken(tokenStr string, publicKey *rsa.PublicKey) error {
