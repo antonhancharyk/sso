@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/antongoncharik/sso/internal/entity"
@@ -133,7 +134,7 @@ func (s *Service) RefreshToken(validateToken entity.ValidateToken) (entity.Token
 	if err != nil {
 		return entity.Token{}, err
 	}
-
+	fmt.Println(token)
 	err = s.repo.CreateToken(entity.CreateToken{UserId: token.UserId, AccessToken: token.AccessToken, RefreshToken: token.RefreshToken})
 	if err != nil {
 		return entity.Token{}, err
