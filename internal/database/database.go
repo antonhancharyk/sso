@@ -1,7 +1,6 @@
 package database
 
 import (
-	"errors"
 	"fmt"
 	"os"
 
@@ -29,19 +28,19 @@ func Connect(log *logger.Logger) {
 
 	driver, err := postgres.WithInstance(conn.DB, &postgres.Config{})
 	if err != nil {
-		log.Fatal("could not create migrate instance: %v", err)
+		log.Fatal(fmt.Errorf("could not create migrate instance: %v", err))
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
 		"file://migrations",
 		os.Getenv("DB_NAME"), driver)
 	if err != nil {
-		log.Fatal(errors.New(fmt.Sprintf("could not create migrate instance: %v", err)))
+		log.Fatal(fmt.Errorf("could not create migrate instance: %v", err))
 	}
 
 	err = m.Up()
 	if err != nil && err != migrate.ErrNoChange {
-		log.Fatal(errors.New(fmt.Sprintf("could not run up migrations: %v", err)))
+		log.Fatal(fmt.Errorf("could not run up migrations: %v", err))
 	}
 
 	log.Info("migrations applied successfully!")

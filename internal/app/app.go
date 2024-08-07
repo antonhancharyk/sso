@@ -2,7 +2,6 @@ package app
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -45,7 +44,7 @@ func Run() {
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
-			log.Fatal(errors.New(fmt.Sprintf("could not listen on :8080: %v\n", err)))
+			log.Fatal(fmt.Errorf("could not listen on :8080: %v", err))
 		}
 	}()
 	log.Info("server started on :8080")
@@ -61,7 +60,7 @@ func Run() {
 	log.Info("shutting down server...")
 	err = server.Shutdown(ctx)
 	if err != nil {
-		log.Fatal(errors.New(fmt.Sprintf("server forced to shutdown: %v\n", err)))
+		log.Fatal(fmt.Errorf("server forced to shutdown: %v", err))
 	}
 	log.Info("server exiting")
 }
