@@ -129,6 +129,7 @@ func (s *Service) RefreshToken(validateToken entity.ValidateToken) (entity.Token
 	if err != nil {
 		return entity.Token{}, err
 	}
+	fmt.Println(token)
 
 	token, err = utilities.GenerateToken(token.UserId, s.keys.PrivateKey)
 	if err != nil {
