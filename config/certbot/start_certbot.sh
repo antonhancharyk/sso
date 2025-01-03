@@ -2,6 +2,8 @@
 
 trap 'exit 0' TERM
 
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 while :; do
   cert_path="/etc/letsencrypt/live/ssoauth.online/fullchain.pem"
 
@@ -18,7 +20,7 @@ while :; do
       # If certificate expires in less than 30 days (2592000 seconds), renew it
       if [ $diff_seconds -le 2592000 ]; then
           echo "Certificate is expiring in less than 30 days. Renewing."
-          certbot renew
+          certbot renew --deploy-hook "/usr/sbin/nginx -s reload" --disable-hook-validation
       else
           echo "Certificate is valid for more than 30 days. No renewal needed."
       fi
