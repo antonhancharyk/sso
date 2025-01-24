@@ -51,17 +51,17 @@ services:
       db:
         condition: service_healthy
 
-  certbot:
-    container_name: certbot
-    image: certbot/certbot
-    volumes:
-      - ./certs:/etc/letsencrypt
-      - ./certs:/var/www/certbot
-      - ./config/certbot/start_certbot.sh:/start_certbot.sh 
-    entrypoint: /start_certbot.sh
-    environment:
-      - CERTBOT_EMAIL=ant.goncharik.development@gmail.com
-      - CERTBOT_DOMAIN=ssoauth.online
+  # certbot:
+  #   container_name: certbot
+  #   image: certbot/certbot
+  #   volumes:
+  #     - ./certs:/etc/letsencrypt
+  #     - ./certs:/var/www/certbot
+  #     - ./config/certbot/start_certbot.sh:/start_certbot.sh 
+  #   entrypoint: /start_certbot.sh
+  #   environment:
+  #     - CERTBOT_EMAIL=ant.goncharik.development@gmail.com
+  #     - CERTBOT_DOMAIN=ssoauth.online
 
   nginx:
     container_name: nginx
