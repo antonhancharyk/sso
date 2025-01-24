@@ -82,21 +82,21 @@ func (h *Handler) LoginForm(ctx *gin.Context) {
 }
 
 func (h *Handler) ExchangeCode(ctx *gin.Context) {
-	var exchangeCode entity.ExchangeCode
+	// var exchangeCode entity.ExchangeCode
 
-	err := ctx.ShouldBindJSON(&exchangeCode)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	// err := ctx.ShouldBindJSON(&exchangeCode)
+	// if err != nil {
+	// 	ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
 
-	token, err := h.svc.ExchangeCode(exchangeCode)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	// token, err := h.svc.ExchangeCode(exchangeCode)
+	// if err != nil {
+	// 	ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
 
-	ctx.JSON(http.StatusOK, token)
+	ctx.JSON(http.StatusOK, "token")
 }
 
 func (h *Handler) ValidateToken(ctx *gin.Context) {
