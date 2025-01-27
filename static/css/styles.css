@@ -1,14 +1,51 @@
 body {
   height: 100vh;
+  margin: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 2rem;
+  padding: 1rem;
+}
+
+main {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  margin: 0;
+  align-items: center;
+  height: calc(100% - 2rem);
+  padding: 1rem;
 }
 
 form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+#theme-toggle {
+  width: 3rem;
+  cursor: pointer;
+}
+
+[data-bs-theme="dark"] {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.form-switch .form-check-input {
+  width: 3rem;
+  height: 1.5rem;
+}
+
+.form-switch .form-check-input:checked {
+  background-color: #4caf50;
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translateX(1.5rem);
 }
