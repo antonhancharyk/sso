@@ -11,13 +11,15 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GenerateToken(userId int64, privateKey *rsa.PrivateKey) (entity.Token, error) {
+func GenerateToken(userId int64, email string, privateKey *rsa.PrivateKey) (entity.Token, error) {
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
 		"user_id": userId,
+		"email":   email,
 		"exp":     time.Now().Add(15 * time.Minute).Unix(),
 	})
 	refreshToken := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
 		"user_id": userId,
+		"email":   email,
 		"exp":     time.Now().Add(7 * 24 * time.Hour).Unix(),
 	})
 

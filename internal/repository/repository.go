@@ -16,6 +16,18 @@ func New(db *sqlx.DB) *Repository {
 	return &Repository{db: db}
 }
 
+func (r *Repository) GetUserByID(id int64) (entity.User, error) {
+	userData := []entity.User{}
+
+	err := r.db.Select(&userData, "SELECT id, email FROM users WHERE id = $1", id)
+
+	if len(userData) == 0 {
+		return entity.User{}, errors.New("user not found")
+	}
+
+	return userData[0], err
+}
+
 func (r *Repository) GetUserByEmail(email string) (entity.User, error) {
 	userData := []entity.User{}
 

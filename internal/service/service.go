@@ -110,7 +110,12 @@ func (s *Service) ExchangeCode(exchangeCode entity.ExchangeCode) (entity.Token, 
 		return entity.Token{}, errors.New("code has expired")
 	}
 
-	token, err := utilities.GenerateToken(code.UserId, s.keys.PrivateKey)
+	user, err := s.repo.GetUserByID(code.UserId)
+	if err != nil {
+		return entity.Token{}, err
+	}
+
+	token, err := utilities.GenerateToken(code.UserId, user.Email, s.keys.PrivateKey)
 	if err != nil {
 		return entity.Token{}, err
 	}
@@ -129,7 +134,12 @@ func (s *Service) RefreshToken(validateToken entity.ValidateToken) (entity.Token
 		return entity.Token{}, err
 	}
 
-	token, err = utilities.GenerateToken(token.UserId, s.keys.PrivateKey)
+	user, err := s.repo.GetUserByID(token.UserId)
+	if err != nil {
+		return entity.Token{}, err
+	}
+
+	token, err = utilities.GenerateToken(token.UserId, user.Email, s.keys.PrivateKey)
 	if err != nil {
 		return entity.Token{}, err
 	}
