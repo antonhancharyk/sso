@@ -52,6 +52,7 @@ jobs:
             echo "${{ secrets.ENV_FILE }}" > .env
             echo "${{ secrets.RSA_PRIVATE_KEY }}" > ./config/rsa/private_key.pem
             docker login -u ${{ env.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-            docker-compose down
-            docker-compose up -d
+            docker-compose pull
+            docker-compose build
+            docker-compose up -d --remove-orphans
+            docker image prune -f
