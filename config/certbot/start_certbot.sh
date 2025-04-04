@@ -4,8 +4,8 @@ trap 'exit 0' TERM
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-cert_path="/etc/letsencrypt/live/ssoauth.online/fullchain.pem"
-domain="ssoauth.online"
+cert_path="/etc/letsencrypt/live/sso-auth.site/fullchain.pem"
+domain="sso-auth.site"
 email="ant.goncharik.development@gmail.com"
 webroot="/var/www/certbot"
 

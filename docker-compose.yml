@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   db:
@@ -17,8 +17,8 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - db_data:/var/lib/postgresql/data    
-      
+      - db_data:/var/lib/postgresql/data
+
   backup:
     container_name: backup
     build:
@@ -57,11 +57,11 @@ services:
     volumes:
       - ./certs:/etc/letsencrypt
       - ./certs:/var/www/certbot
-      - ./config/certbot/start_certbot.sh:/start_certbot.sh 
+      - ./config/certbot/start_certbot.sh:/start_certbot.sh
     entrypoint: /start_certbot.sh
     environment:
       - CERTBOT_EMAIL=ant.goncharik.development@gmail.com
-      - CERTBOT_DOMAIN=ssoauth.online
+      - CERTBOT_DOMAIN=sso-auth.site
 
   nginx:
     container_name: nginx
@@ -76,8 +76,7 @@ services:
       - ./certs:/var/www/certbot
     depends_on:
       app:
-        condition: service_started      
+        condition: service_started
 
 volumes:
   db_data:
-  
