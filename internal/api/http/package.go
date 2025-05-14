@@ -1,6 +1,8 @@
 package http
 
 import (
+	"net/http"
+
 	"github.com/antongoncharik/sso/internal/api/http/handler"
 	"github.com/antongoncharik/sso/internal/api/http/middleware"
 	"github.com/gin-gonic/gin"
@@ -8,6 +10,8 @@ import (
 
 func GetRoutes(hdl *handler.Handler) *gin.Engine {
 	r := gin.Default()
+
+	r.GET("/healthz", healthz)
 
 	r.Use(middleware.UseCORS())
 
@@ -23,4 +27,8 @@ func GetRoutes(hdl *handler.Handler) *gin.Engine {
 	r.GET("/validate", hdl.ValidateToken)
 
 	return r
+}
+
+func healthz(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "ok")
 }
