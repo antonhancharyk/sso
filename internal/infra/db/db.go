@@ -1,10 +1,9 @@
-package database
+package db
 
 import (
 	"fmt"
 	"os"
 
-	"github.com/antongoncharik/sso/pkg/logger"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -14,38 +13,37 @@ import (
 
 var db *sqlx.DB
 
-func Connect(log *logger.Logger) {
+func Connect() error {
 	connectStr := fmt.Sprintf("user=%s dbname=%s sslmode=disable password=%s host=db", os.Getenv("DB_USER"), os.Getenv("DB_NAME"), os.Getenv("DB_PASSWORD"))
 
 	conn, err := sqlx.Connect("postgres", connectStr)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	err = conn.Ping()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	driver, err := postgres.WithInstance(conn.DB, &postgres.Config{})
 	if err != nil {
-		log.Fatal(fmt.Errorf("could not create migrate instance: %v", err))
+		return err
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
 		"file://migrations",
 		os.Getenv("DB_NAME"), driver)
 	if err != nil {
-		log.Fatal(fmt.Errorf("could not create migrate instance: %v", err))
+		return err
 	}
 
 	err = m.Up()
 	if err != nil && err != migrate.ErrNoChange {
-		log.Fatal(fmt.Errorf("could not run up migrations: %v", err))
+		return err
 	}
 
-	log.Info("migrations applied successfully!")
-
 	db = conn
+	return nil
 }
 
 func Get() *sqlx.DB {

@@ -1,17 +1,16 @@
-package utilities
+package security
 
 import (
 	"crypto/rsa"
 	"errors"
 	"fmt"
-	"os"
 	"time"
 
-	"github.com/antongoncharik/sso/internal/entity"
+	"github.com/antongoncharik/sso/internal/domain"
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GenerateToken(userId int64, email string, privateKey *rsa.PrivateKey) (entity.Token, error) {
+func GenerateToken(userId int64, email string, privateKey *rsa.PrivateKey) (domain.Token, error) {
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
 		"user_id": userId,
 		"email":   email,
@@ -25,14 +24,14 @@ func GenerateToken(userId int64, email string, privateKey *rsa.PrivateKey) (enti
 
 	accessTokenStr, err := accessToken.SignedString(privateKey)
 	if err != nil {
-		return entity.Token{}, errors.New("error generating token")
+		return domain.Token{}, errors.New("error generating token")
 	}
 	refreshTokenStr, err := refreshToken.SignedString(privateKey)
 	if err != nil {
-		return entity.Token{}, errors.New("error generating token")
+		return domain.Token{}, errors.New("error generating token")
 	}
 
-	return entity.Token{UserId: userId, AccessToken: accessTokenStr, RefreshToken: refreshTokenStr}, nil
+	return domain.Token{UserId: userId, AccessToken: accessTokenStr, RefreshToken: refreshTokenStr}, nil
 }
 
 func ValidateToken(tokenStr string, publicKey *rsa.PublicKey) error {
@@ -57,32 +56,4 @@ func ValidateToken(tokenStr string, publicKey *rsa.PublicKey) error {
 	}
 
 	return errors.New("invalId token")
-}
-
-func LoadPrivateKey(path string) (*rsa.PrivateKey, error) {
-	privateKeyData, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKeyData)
-	if err != nil {
-		return nil, err
-	}
-
-	return privateKey, nil
-}
-
-func LoadPublicKey(path string) (*rsa.PublicKey, error) {
-	publicKeyData, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyData)
-	if err != nil {
-		return nil, err
-	}
-
-	return publicKey, nil
 }
