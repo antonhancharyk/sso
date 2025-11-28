@@ -12,7 +12,7 @@ type TokenService struct {
 }
 
 func NewTokenService(tokenRepo domain.TokenRepo, userRepo domain.UserRepo, RSA security.RSA) *TokenService {
-	return &TokenService{tokenRepo: tokenRepo, userRepo: userRepo}
+	return &TokenService{tokenRepo: tokenRepo, userRepo: userRepo, RSA: RSA}
 }
 
 func (s *TokenService) RefreshToken(validateToken domain.ValidateToken) (domain.Token, error) {

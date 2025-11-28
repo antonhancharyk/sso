@@ -21,7 +21,7 @@ type ServiceDeps struct {
 
 func NewServices(deps ServiceDeps) *Service {
 	return &Service{
-		User:  NewUserService(deps.UserRepo, deps.CodeRepo),
+		User:  NewUserService(deps.UserRepo, deps.CodeRepo, deps.ClientRepo),
 		Token: NewTokenService(deps.TokenRepo, deps.UserRepo, deps.RSA),
 		Code:  NewCodeService(deps.UserRepo, deps.TokenRepo, deps.CodeRepo, deps.RSA),
 	}

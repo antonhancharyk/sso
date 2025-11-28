@@ -15,8 +15,8 @@ type UserService struct {
 	clientRepo domain.ClientRepo
 }
 
-func NewUserService(userRepo domain.UserRepo, codeRepo domain.CodeRepo) *UserService {
-	return &UserService{userRepo: userRepo}
+func NewUserService(userRepo domain.UserRepo, codeRepo domain.CodeRepo, clientRepo domain.ClientRepo) *UserService {
+	return &UserService{userRepo: userRepo, codeRepo: codeRepo, clientRepo: clientRepo}
 }
 
 func (s *UserService) Register(register domain.Register) (domain.Code, error) {

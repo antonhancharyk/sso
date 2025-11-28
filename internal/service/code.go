@@ -16,7 +16,7 @@ type CodeService struct {
 }
 
 func NewCodeService(userRepo domain.UserRepo, tokenRepo domain.TokenRepo, codeRepo domain.CodeRepo, RSA security.RSA) *CodeService {
-	return &CodeService{userRepo: userRepo, tokenRepo: tokenRepo, codeRepo: codeRepo}
+	return &CodeService{userRepo: userRepo, tokenRepo: tokenRepo, codeRepo: codeRepo, RSA: RSA}
 }
 
 func (s *CodeService) ExchangeCode(exchangeCode domain.ExchangeCode) (domain.Token, error) {
