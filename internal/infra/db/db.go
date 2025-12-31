@@ -14,7 +14,7 @@ import (
 var db *sqlx.DB
 
 func Connect() error {
-	connectStr := fmt.Sprintf("user=%s dbname=%s sslmode=disable password=%s host=db", os.Getenv("DB_USER"), os.Getenv("DB_NAME"), os.Getenv("DB_PASSWORD"))
+	connectStr := fmt.Sprintf("user=%s dbname=%s sslmode=disable password=%s host=db_sso", os.Getenv("DB_USER"), os.Getenv("DB_NAME"), os.Getenv("DB_PASSWORD"))
 
 	conn, err := sqlx.Connect("postgres", connectStr)
 	if err != nil {

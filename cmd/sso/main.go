@@ -48,14 +48,14 @@ func main() {
 	r := httpserver.GetRoutes(hdl)
 
 	server := &http.Server{
-		Addr:    ":8080",
+		Addr:    ":8081",
 		Handler: r,
 	}
 
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
-			log.Error(fmt.Errorf("could not listen on :8080: %v", err))
+			log.Error(fmt.Errorf("could not listen on :8081: %v", err))
 			os.Exit(1)
 		}
 	}()

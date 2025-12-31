@@ -7,5 +7,5 @@ WORKDIR /opt/app
 COPY --from=builder /opt/app/sso /opt/app/sso
 COPY --from=builder /opt/app/static /opt/app/static
 COPY --from=builder /opt/app/migrations /opt/app/migrations
-EXPOSE 8080
+EXPOSE 8081
 CMD ["./sso"]

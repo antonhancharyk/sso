@@ -38,7 +38,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./docker-compose.yml, ./config"
+          source: "./docker-compose.yml,./config"
           target: "./${{ env.IMAGE_NAME }}"
 
       - name: Run services
@@ -53,6 +53,5 @@ jobs:
             echo "${{ secrets.RSA_PRIVATE_KEY }}" > ./config/rsa/private_key.pem
             docker login -u ${{ env.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
             docker-compose pull
-            docker-compose build backup
             docker-compose up -d --remove-orphans
             docker image prune -f
