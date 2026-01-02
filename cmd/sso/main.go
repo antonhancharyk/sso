@@ -59,7 +59,7 @@ func main() {
 			os.Exit(1)
 		}
 	}()
-	log.Info("server started on :8080")
+	log.Info("server started on :8081")
 
 	<-ctx.Done()
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
